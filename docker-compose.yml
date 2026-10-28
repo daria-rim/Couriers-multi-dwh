@@ -1,0 +1,24 @@
+services:
+  de-pg-cr-af:
+    image: cr.yandex/crp1r8pht0n0gl25aug1/de-pg-cr-af:v2026-03-12-r1
+    ports:
+      - 3000:3000
+      - 3002:3002
+      - 15432:5432
+    volumes:
+      - s5t4postgresql:/var/lib/postgresql/data  
+      - ${AIRFLOW_DAGS_DIR:-./dags}:/lessons/dags
+    environment:
+      - POSTGRES_USER=
+      - POSTGRES_PASSWORD=
+      - POSTGRES_DB=
+    restart: unless-stopped
+
+  metabase:
+    image: metabase/metabase
+    ports:
+      - 3333:3000
+    restart: unless-stopped
+
+volumes:
+  s5t4postgresql:
